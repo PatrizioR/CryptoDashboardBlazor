@@ -1,0 +1,38 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<Card Margin="Margin.Is1.OnY">
+    <CardBody>
+        <Field Horizontal="true">
+            <FieldLabel Class="middle-text" ColumnSize="ColumnSize.Is12"><span style="color: white">@Worker.Name</span></FieldLabel>
+        </Field>
+        <Field Horizontal="true">
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is1">
+                <OnlineStatusDot Diameter="20" Status="@Worker.Status"></OnlineStatusDot>
+
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is4">
+                @Worker.CurrentHashRate.ToRoundedString(5) @PoolInfo?.CoinInfo?.MiningName
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @Wallet.Name
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is4">
+                @Worker.LastShareInMinutes.ToRoundedString(0) @(Worker.LastShareInMinutes > 1 ? Loc["Minutes"] : Loc["Minute"])
+            </FieldBody>
+        </Field>
+    </CardBody>
+</Card>
+
+@code{
+    [Parameter]
+    public PoolInfoDto PoolInfo { get; set; } = null!;
+
+    [Parameter]
+    public IEnumerable<WalletDto> Wallets { get; set; } = null!;
+
+    [Parameter]
+    public WalletDto Wallet { get; set; } = null!;
+
+    [Parameter]
+    public WorkerDto Worker { get; set; } = null!;
+}

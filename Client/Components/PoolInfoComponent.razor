@@ -1,0 +1,52 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<Card Margin="Margin.Is1.OnY">
+    <CardBody>
+        <Field Horizontal="true">
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">1 @PoolInfo?.CoinInfo?.Name</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is3">@Loc["Workers"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is3">@Loc["Hashrate"]</FieldLabel>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @PoolInfo?.CoinInfo?.Exchange?.ToRoundedString() @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @Wallets?.Where(wal => wal.Workers?.Any() == true).SelectMany(wal => wal.Workers.DefaultIfNullOrEmpty()).Count()
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @Wallets?.Where(wal => wal.Workers?.Any() == true).SelectMany(wal => wal.Workers.DefaultIfNullOrEmpty()).Sum(wor => wor.CurrentHashRate).ToRoundedString() @PoolInfo?.CoinInfo?.MiningName
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Unpaid"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Last 24 hours reward"]</FieldLabel>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @Wallets?.Sum(wal => wal.UnpaidBalance).ToRoundedString(5) @PoolInfo?.CoinInfo?.Name = @((Wallets?.Sum(wal => wal.UnpaidBalance) * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @Wallets?.Sum(wal => wal.Last24HoursReward).ToRoundedString(5) @PoolInfo?.CoinInfo?.Name = @((Wallets?.Sum(wal => wal.Last24HoursReward) * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Paid"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Last update"]</FieldLabel>
+
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @Wallets?.Sum(wal => wal.Paid).ToRoundedString(5) @PoolInfo?.CoinInfo?.Name = @((Wallets?.Sum(wal => wal.Paid) * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @LastUpdate.ToGermanString()
+            </FieldBody>
+        </Field>
+    </CardBody>
+</Card>
+
+@code{
+    [Parameter]
+    public PoolInfoDto PoolInfo { get; set; } = null!;
+
+    [Parameter]
+    public IEnumerable<WalletDto> Wallets { get; set; } = null!;
+
+    [Parameter]
+    public DateTime? LastUpdate { get; set; }
+}

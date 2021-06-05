@@ -1,0 +1,262 @@
+﻿// prettier-ignore
+/* For readability purposes this syntax was chosen:
+    {custom classes} {framework classes}
+*/
+
+// VARIABLES
+$sql-red: #e6252f;
+$sql-blue: #006bb6;
+$sql-grey1: #C0C0C0;
+$sql-grey2: #a09e9e;
+$sql-grey3: #e9e9e9;
+// MIXIN
+@mixin flex($justify, $align, $direction) {
+	display: flex;
+	justify-content: $justify;
+	align-items: $align;
+	flex-direction: $direction;
+}
+// prettier-ignore
+/* GENERAL (what multiple components use) */
+.alt-active {
+	color: #28a745;
+	font-weight: bold;
+}
+
+a {
+	outline: none;
+}
+
+#navs-wrapper .navbar-nav .nav-link {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+#navs-wrapper .navbar-nav {
+	flex-direction: row;
+}
+
+.user-svg {
+	font-size: 2rem;
+}
+
+.fa-user {
+	color: $sql-blue;
+}
+
+.fa-user-times {
+	color: $sql-red;
+}
+
+#full-nav-options {
+	font-size: 1.13rem;
+}
+
+.custom-project-header {
+	background-color: #ffc107;
+}
+
+.close-icon {
+	margin: auto 0;
+	text-decoration: none;
+	color: black;
+}
+
+.language-prepend {
+	height: calc(1.5em + 2px + 0.75rem);
+	font-size: 1rem;
+}
+
+.maform {
+	background-color: $sql-grey1;
+	border-radius: 0px 50px 0px 50px;
+}
+
+.line {
+	color: $sql-grey2;
+	height: 3px;
+}
+
+.uberschrift {
+	color: $sql-grey2;
+}
+
+.tableheader {
+	color: #fff;
+	background-color: $sql-grey2;
+}
+
+.mytable {
+	background-color: $sql-grey3;
+}
+
+.b-1 {
+	border: 2px solid #eee;
+	border-left: 0;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.newpaddingleft {
+	padding-left: 0;
+}
+
+.tdfont {
+	font-size: 1.25rem;
+	line-height: 1.2;
+}
+
+.p1 {
+	padding: 0;
+}
+
+.maform1 {
+	border-radius: 0px 50px 0px 0px;
+	background-color: $sql-grey1;
+}
+
+.maform2 {
+	border-radius: 0px 0px 0px 50px;
+	background-color: $sql-grey1;
+}
+
+.newgrid {
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr 3fr;
+	grid-gap: 10px;
+}
+
+.l-7 {
+	grid-column: 4/5;
+}
+
+// prettier-ignore
+/* remove top margin to align w btns */
+@media (max-width: 767px) {
+	#header-wrapper .navbar-nav .nav-link {
+		padding: 0 0.3rem;
+	}
+
+	#full-nav-options {
+		font-size: 1rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	#full-nav-options {
+		font-size: 1.7rem;
+	}
+}
+
+@media (max-width: 500px) {
+	html {
+		font-size: 30%;
+	}
+}
+// fuer 1080p
+@media (min-width: 2550px) {
+	html {
+		font-size: 120%;
+	}
+}
+
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: none !important;
+		margin: 1.75rem auto;
+	}
+}
+
+@media (min-width: 3830px) {
+	html {
+		font-size: 140%;
+	}
+}
+
+.confirm-dialog {
+	width: 90%
+}
+
+.popup-100 {
+	height: calc(100vh - 3.5rem);
+	width: calc(100vw - 3.5rem);
+	max-width: 1000px !important;
+}
+
+.popup-100 > .modal-content {
+	min-width: 800px;
+	top: 5%;
+	left: 5%;
+	transform: translate(-5%, -5%);
+}
+
+.overlay {
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 99999;
+	background: rgba(22, 22, 22, 0.5);
+}
+
+.overlay__inner {
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.overlay__content {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.spinner {
+	width: 75px;
+	height: 75px;
+	display: inline-block;
+	border-width: 2px;
+	border-color: rgba(255, 255, 255, 0.05);
+	border-top-color: #fff;
+	animation: spin 1s infinite linear;
+	border-radius: 100%;
+	border-style: solid;
+}
+
+@keyframes spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.navi div {
+	display: block !important;
+}
+
+@media (min-width: 992px) {
+	.navbtn {
+		display: none;
+	}
+}
+
+@media (max-width: 576px) {
+	.navbtn {
+		display: block;
+	}
+}
+
+.small-label {
+	font-size: 2em;
+}
+
+.big-text {
+	font-size: 3em;
+}
+
+.middle-text{
+	font-size: 2.5em;
+}

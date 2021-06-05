@@ -1,0 +1,23 @@
+﻿@if (Status == OnlineStatus.Online)
+{
+    <Dot Color="@System.Drawing.Color.Green" Diameter="@Diameter"></Dot>
+}
+else if (Status == OnlineStatus.Unsure)
+{
+    <Dot Color="@System.Drawing.Color.Yellow" Diameter="@Diameter"></Dot>
+}
+else if (Status == OnlineStatus.Offline)
+{
+    <Dot Color="@System.Drawing.Color.Red" Diameter="@Diameter"></Dot>
+}
+else
+{
+    <Dot Color="@System.Drawing.Color.Gray" Diameter="@Diameter"></Dot>
+}
+@code {
+    [Parameter]
+    public OnlineStatus Status { get; set; }
+
+    [Parameter]
+    public int Diameter { get; set; }
+}

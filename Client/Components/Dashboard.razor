@@ -1,0 +1,29 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<Row>
+    @if (WalletState.Value.IsLoading)
+    {
+        <CircleLoading></CircleLoading>
+    }
+    @if (WalletsOverview != null)
+    {
+<Column>
+    <AdvancedTimer IntervalInMilisec="60000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(c => { LoadWallets(); })" />
+    <AdvancedTimer IntervalInMilisec="3600000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(c => { LoadPoolInfo(); })" />
+    <PoolInfoComponent PoolInfo="@WalletState.Value.CurrentPoolInfo" Wallets="@WalletState.Value.CurrentWallets" LastUpdate="@WalletState.Value.LastUpdate"></PoolInfoComponent>
+    @foreach (var wallet in WalletState.Value.CurrentWallets.DefaultIfNullOrEmpty())
+    {
+        <WalletComponent PoolInfo="@WalletState.Value.CurrentPoolInfo" Wallets="@WalletState.Value.CurrentWallets" Wallet="@wallet" PoolInfoUrl="@Configuration.PoolUrl"></WalletComponent>
+    }
+
+    @foreach (var wallet in WalletState.Value.CurrentWallets.DefaultIfNullOrEmpty())
+    {
+        @foreach (var worker in wallet.Workers.DefaultIfNullOrEmpty())
+        {
+            <WorkerComponent PoolInfo="@WalletState.Value.CurrentPoolInfo" Wallets="@WalletState.Value.CurrentWallets" Wallet="@wallet" Worker="@worker"></WorkerComponent>
+        }
+    }
+
+</Column>
+    }
+</Row>

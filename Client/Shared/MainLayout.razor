@@ -1,0 +1,26 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorLayout
+@using System.Reflection
+
+<div class="page">
+    <header>
+        <NavMenu />
+    </header>
+
+    <div class="main">
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+    <footer class="page-footer font-small small blue">
+        <div class="footer-copyright text-center py-3">
+            @Assembly.GetExecutingAssembly().GetName().Name - @Assembly.GetExecutingAssembly().GetName().Version <em>@Assembly.GetExecutingAssembly().GetBuildDateTime()</em>
+        </div>
+    </footer>
+</div>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+}

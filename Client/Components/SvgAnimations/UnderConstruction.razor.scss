@@ -1,0 +1,220 @@
+@mixin tree-fix {
+	transform-box: fill-box;
+	transform-origin: center bottom;
+}
+.wrapper-container {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 35vw;
+	height: 65vh;
+	margin: auto;
+}
+.svg-wrapper-container {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+.title {
+	height: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@media (max-width: 1500px) {
+	.wrapper-container {
+		width: 45vw;
+	}
+}
+
+@media (max-width: 1000px) {
+	.wrapper-container {
+		width: 65vw;
+	}
+}
+
+@media (max-width: 600px) {
+	.wrapper-container {
+		margin: 2rem auto;
+		margin-top: 0.5rem;
+		width: 85vw;
+	}
+}
+#tree-right {
+	@include tree-fix();
+	animation: tree-wiggle 15s linear infinite normal;
+}
+#tree-left {
+	@include tree-fix();
+	animation: tree-wiggle 15s 0.5s infinite normal;
+}
+#tree-center {
+	@include tree-fix();
+	animation: tree-wiggle 15s 0.8s infinite normal;
+}
+#left-side {
+	transform-box: fill-box;
+	transform-origin: left bottom;
+	opacity: 0;
+	animation: left-build 8s normal 2s infinite;
+}
+#big-part {
+	transform-box: fill-box;
+	transform-origin: 20% bottom;
+	opacity: 0;
+	animation: big-build 8s normal 2s infinite;
+}
+#center-beam-vertical {
+	transform-box: fill-box;
+	transform-origin: center bottom;
+	opacity: 0;
+	animation: vertical-build 8s normal 2s infinite;
+}
+#center-beam-horizontal {
+	transform-box: fill-box;
+	transform-origin: center bottom;
+	opacity: 0;
+	animation: horizontal-build 8s normal 2s infinite;
+}
+#helmet-wrapper {
+	transform-box: fill-box;
+	transform-origin: center center;
+	animation: helmet-fly 8s 2s infinite normal;
+}
+#helmet {
+	transform-box: fill-box;
+	transform-origin: center center;
+	animation: helmet-spin 8s 2s ease-in-out infinite normal;
+}
+
+@keyframes tree-wiggle {
+	0% {
+		transform: rotateZ(0deg);
+	}
+	10% {
+		transform: rotateZ(5deg);
+		animation-timing-function: ease-in-out;
+	}
+	30% {
+		transform: rotateZ(-10deg);
+		animation-timing-function: ease-in-out;
+	}
+	40% {
+		transform: rotateZ(0deg);
+	}
+}
+@keyframes left-build {
+	0% {
+		transform: rotateX(-90deg) rotateZ(-5deg);
+		opacity: 0;
+	}
+	5% {
+		transform: rotateX(-90deg) rotateZ(-5deg);
+		opacity: 0;
+	}
+	15% {
+		transform: rotate(0deg);
+		opacity: 1;
+		animation-timing-function: ease-in-out;
+	}
+	65% {
+		transform: rotate(0deg);
+		opacity: 1;
+	}
+	87% {
+		transform: rotateX(-90deg) rotateZ(-5deg);
+		opacity: 0;
+		animation-timing-function: ease-in-out;
+	}
+}
+@keyframes big-build {
+	0% {
+		transform: rotateX(-75deg) rotateZ(5deg);
+		opacity: 0;
+	}
+	2% {
+		transform: rotateX(-75deg) rotateZ(5deg);
+		opacity: 0;
+	}
+	12% {
+		transform: rotateX(0deg);
+		opacity: 1;
+		animation-timing-function: ease-in-out;
+	}
+	68% {
+		transform: rotateX(0deg);
+		opacity: 1;
+	}
+	80% {
+		transform: rotateX(-75deg) rotateZ(5deg);
+		opacity: 0;
+		animation-timing-function: ease-in-out;
+	}
+}
+@keyframes vertical-build {
+	10% {
+		transform: rotateZ(80deg) rotateX(40deg);
+		opacity: 0;
+	}
+	20% {
+		transform: rotateZ(0deg) rotateX(0deg);
+		opacity: 1;
+		animation-timing-function: ease-in-out;
+	}
+	65% {
+		transform: rotateZ(0deg) rotateX(0deg);
+		opacity: 1;
+	}
+	75% {
+		transform: rotateZ(80deg) rotateX(40deg);
+		opacity: 0;
+		animation-timing-function: ease-in-out;
+	}
+}
+@keyframes horizontal-build {
+	15% {
+		transform: translateY(150%);
+		opacity: 0;
+	}
+	25% {
+		transform: translateY(0);
+		opacity: 1;
+		animation-timing-function: ease-in-out;
+	}
+	60% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	70% {
+		transform: translateY(150%);
+		opacity: 0;
+		animation-timing-function: ease-in-out;
+	}
+}
+@keyframes helmet-fly {
+	46% {
+		transform: translateY(0);
+	}
+	52% {
+		transform: translateY(-350%);
+		animation-timing-function: ease-in-out;
+	}
+	58% {
+		transform: translateY(0);
+	}
+}
+@keyframes helmet-spin {
+	46% {
+		transform: rotate(0deg);
+	}
+	58% {
+		transform: rotate(-1turn);
+	}
+	100% {
+		transform: rotateZ(-1turn);
+	}
+}

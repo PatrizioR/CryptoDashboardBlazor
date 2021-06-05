@@ -1,0 +1,18 @@
+﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<EditForm Model="@CurrentPoolInfoUrl" style="width: 95%">
+    <Row>
+        <Column>
+            <Card Margin="Margin.Is5.OnY">
+                <CardHeader>
+                    <CardTitle>Settings</CardTitle>
+                </CardHeader>
+                <CardBody>
+                    <TextEdit @bind-Text="@CurrentPoolInfoUrl" Placeholder="Api URL"></TextEdit>
+                </CardBody>
+            </Card>
+        </Column>
+    </Row>
+</EditForm>
+
+<button class="btn btn-primary" @onclick="SaveAsync">Speichern</button>

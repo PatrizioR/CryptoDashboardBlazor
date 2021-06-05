@@ -1,0 +1,47 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using System.Globalization
+@inject NavigationManager Nav
+@inject IJSRuntime JSRuntime
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<div id="navs-wrapper">
+    <nav class="navbar navbar-expand-md navbar-light bg-dark" id="header-nav">
+        <div class="container-fluid" id="header-wrapper">
+            <div class="align-top py-sm-1" id="logo-wrapper">
+                <a href="#" class="navbar-brand h-100">
+                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_banner.png" alt="@Loc["The silver mine"]"
+                         style="max-height: 100px; height: 10vw" />
+                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_second_banner.png" alt="@Loc["The silver mine"]"
+                         style="max-height: 100px; height: 10vw" />
+                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_third_banner.png" alt="@Loc["The silver mine"]"
+                         style="max-height: 100px; height: 10vw" />
+                </a>
+            </div>
+            <div class="d-flex flex-row-reverse flex-wrap" id="full-nav-options">
+                <div class="p-2">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <NavLink class="nav-link ml-md-4 ml-sm-4 ml-xs-1" href="" Match="NavLinkMatch.All">
+                                <span class="d-none d-md-inline btn btn-secondary btn-lg"> @Loc["Dashboard"]<span class="fas fa-project-diagram ml-md-3 ml-1" aria-hidden="true"></span></span>
+                            </NavLink>
+                        </li>
+                        <li class="nav-item ml-md-3 ml-1" style=" margin-top: 0.78rem " title="@Loc["Language"]">
+                            <div class="input-group d-flex justify-content-center align-items-center">
+                                <div class="input-group-prepend language-prepend">
+                                    <label class="input-group-text" for="language-selection">
+                                        <i class="fas fa-language"></i>
+                                    </label>
+                                </div>
+                                <select @bind="Culture" class="nav-link custom-select pl-0 pr-4"
+                                        id="language-selection">
+                                    @foreach (var culture in supportedCultures)
+                                    {
+                        <option value="@culture">@culture.TwoLetterISOLanguageName.ToUpper()</option>}
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

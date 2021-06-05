@@ -1,0 +1,79 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<Card Margin="Margin.Is1.OnY">
+    <CardBody>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3"><h2 style="color: white"><a href="@PoolInfoDto.AccountUrl(PoolInfoUrl, Wallet.Id)" target="_blank">@Wallet?.Name</a></h2> (@Wallet?.Owner)</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is3">@Loc["Hashrate"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is3">@Loc["Workers"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is3">@Loc["Next payout"]</FieldLabel>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3"> </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @Wallet?.Workers?.Sum(wor => wor.CurrentHashRate).ToRoundedString() @PoolInfo?.CoinInfo?.MiningName
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @Wallet?.Workers?.Count()
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
+                @(PoolInfo?.NextPayment(Wallet.UnpaidBalance + Wallet.UnconfirmedBalance, Wallet.Last24HoursReward)?.ToShortDayOfMonthGerman()) @(PoolInfo?.NextPayment(Wallet.UnpaidBalance + Wallet.UnconfirmedBalance, Wallet.Last24HoursReward).ToGermanString())
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is12">@Loc["Balance"]</FieldLabel>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @((Wallet.Balance).ToRoundedString(5)) @PoolInfo?.CoinInfo?.Name = @((Wallet?.Balance * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                <Progress>
+                    <ProgressBar Animated="true" Value="@ProgressValuePayout" />
+                    <ProgressBar Background="Background.Secondary" Value="@(100-ProgressValuePayout)" />
+                    <ProgressBar></ProgressBar>
+                </Progress>
+                <span>@ProgressValuePayout %</span>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Unpaid"]</FieldLabel>
+            <FieldLabel Class="small-label" ColumnSize="ColumnSize.Is6">@Loc["Paid"]</FieldLabel>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @((Wallet.UnpaidBalance + Wallet.UnconfirmedBalance).ToRoundedString(5)) @PoolInfo?.CoinInfo?.Name = @(((Wallet.UnpaidBalance + Wallet.UnconfirmedBalance) * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+            <FieldBody Class="big-text" ColumnSize="ColumnSize.Is6">
+                @((Wallet.Paid).ToRoundedString(5)) @PoolInfo?.CoinInfo?.Name = @(((Wallet.Paid) * PoolInfo?.CoinInfo?.Exchange).ToRoundedString()) @PoolInfo?.CoinInfo?.Currency
+            </FieldBody>
+        </Field>
+    </CardBody>
+</Card>
+
+@code{
+    [Parameter]
+    public PoolInfoDto? PoolInfo { get; set; }
+
+    [Parameter]
+    public IEnumerable<WalletDto> Wallets { get; set; } = null!;
+
+    [Parameter]
+    public WalletDto Wallet { get; set; } = null!;
+
+    [Parameter]
+    public string PoolInfoUrl { get; set; } = null!;
+
+    public int ProgressValuePayout
+    {
+        get
+        {
+            var balance = Wallet.UnpaidBalance + Wallet.UnconfirmedBalance;
+            var payInterval = PoolInfo?.PaymentInterval ?? 0;
+            if (!balance.HasValue)
+            {
+                return 0;
+            }
+            if(balance > payInterval)
+            {
+                return 100;
+            }
+
+            return (int)(100 / payInterval * balance.Value);
+        }
+    }
+}

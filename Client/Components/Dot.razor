@@ -1,0 +1,8 @@
+﻿<span class="dot" style="background-color: @Color.ToHtmlCode(); height: @(Diameter)px; width: @(Diameter)px;"></span>
+@code {
+    [Parameter]
+    public System.Drawing.Color Color { get; set; }
+
+    [Parameter]
+    public int Diameter { get; set; }
+}
