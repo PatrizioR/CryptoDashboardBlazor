@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace TheSilverMine.Client.Components.SvgAnimations
+namespace CryptoDashboardBlazor.Client.Components.SvgAnimations
 {
     public partial class UnderConstruction
     {

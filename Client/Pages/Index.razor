@@ -1,4 +1,12 @@
-﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+﻿@using CryptoDashboardBlazor.Data.Store.State
+@using Fluxor
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @page "/"
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
-<Dashboard></Dashboard>
+    <Dashboard></Dashboard>
+
+@code
+{
+    [Inject]
+    public IState<WalletState> WalletState { get; set; } = null!;
+}

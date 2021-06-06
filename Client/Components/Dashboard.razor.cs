@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using CryptoDashboardBlazor.Data.Models;
 using CryptoDashboardBlazor.Data.Services;
 using CryptoDashboardBlazor.Data.Store.State;
@@ -21,6 +22,7 @@ namespace CryptoDashboardBlazor.Client.Components
         public StateFacade Facade { get; set; } = null!;
 
         [Inject] public AppConfiguration Configuration { get; set; } = null!;
+        [Inject] private ILocalStorageService LocalStorage { get; set; } = null!;
 
         public WalletDto? WalletsOverview
         {
@@ -49,26 +51,36 @@ namespace CryptoDashboardBlazor.Client.Components
             {
                 if (WalletState.Value.CurrentPoolInfo == null)
                 {
-                    LoadPoolInfo();
+                    await LoadPoolInfoAsync();
                 }
                 if (WalletState.Value.CurrentWallets?.Any() != true)
                 {
-                    LoadWallets();
+                    await LoadWalletsAsync();
                 }
             }
 
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        private void LoadWallets()
+        private async Task LoadWalletsAsync()
         {
             List<WalletDto> wallets = Configuration.Wallets?.ToList() ?? new List<WalletDto>();
+
+            var currentWallet = await LocalStorage.GetItemAsync<WalletDto>(AppConfiguration.WalletLabel);
+
+            if (currentWallet != null)
+            {
+                wallets.Add(currentWallet);
+            }
+
             Facade.LoadWallets(wallets.ToArray());
         }
 
-        private void LoadPoolInfo()
+        private async Task LoadPoolInfoAsync()
         {
-            Facade.LoadPoolInfo(Configuration.PoolInfo?.Name, WalletState.Value.CurrentApiUrl);
+            var currentPoolInfoUrl = await LocalStorage.GetItemAsync<string>(AppConfiguration.ApiKeyLabel);
+
+            Facade.LoadPoolInfo(Configuration.PoolInfo?.Name, Configuration.EthereumPriceApiUrl?.Replace("{YOUR_API_KEY}", currentPoolInfoUrl ?? ""));
         }
     }
 }

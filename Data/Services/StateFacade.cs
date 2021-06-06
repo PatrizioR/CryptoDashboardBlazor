@@ -1,4 +1,5 @@
 using CryptoDashboardBlazor.Data.Models;
+using CryptoDashboardBlazor.Data.Store.Features.Wallet.Actions.AddWalletAndSelect;
 using CryptoDashboardBlazor.Data.Store.Features.Wallet.Actions.LoadPoolInfoByName;
 using CryptoDashboardBlazor.Data.Store.Features.Wallet.Actions.LoadWalletsById;
 using CryptoDashboardBlazor.Data.Store.Features.Wallet.Actions.SaveSettings;
@@ -33,10 +34,16 @@ namespace CryptoDashboardBlazor.Data.Services
             _dispatcher.Dispatch(new LoadPoolInfoByNameAction($"{name};{id}", url));
         }
 
-        public void SaveSettings(string? apiUrl)
+        public void SaveSettings(string? apiUrl, WalletDto? wallet)
         {
             _logger.LogInformation($"Issuing action to save settings...");
-            _dispatcher.Dispatch(new SaveSettingsAction(apiUrl));
+            _dispatcher.Dispatch(new SaveSettingsAction(apiUrl, wallet));
+        }
+
+        public void AddWalletAndSelect()
+        {
+            _logger.LogInformation($"Issuing action to create new wallet and select...");
+            _dispatcher.Dispatch(new AddWalletAndSelectAction());
         }
     }
 }

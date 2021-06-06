@@ -18,9 +18,8 @@ namespace CryptoDashboardBlazor.Data.Store.Features.Wallet.Effects
         protected override async Task HandleEffectAsync(SaveSettingsAction action, IDispatcher dispatcher)
         {
             logger.LogInformation($"Start save settings...");
-            // TODO logic
             logger.LogInformation("successfully!");
-            dispatcher.Dispatch(new SaveSettingsSuccessAction());
+            dispatcher.Dispatch(new SaveSettingsSuccessAction(action.ApiKey, action.Wallet));
         }
     }
 }

@@ -22,13 +22,13 @@ namespace CryptoDashboardBlazor.Client.Components
         [Inject] public StateFacade Facade { get; set; } = null!;
         [Inject] private ILocalStorageService LocalStorage { get; set; } = null!;
         [Inject] private IToastService ToastService { get; set; } = null!;
-        public WalletDto EditItem => WalletState.Value.CurrentWallet;
 
-        public string? CurrentPoolInfoUrl { get; set; }
+        public WalletDto? EditItem => WalletState.Value.CurrentWallet;
+        public string? CurrentApiKey { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            CurrentPoolInfoUrl = await LocalStorage.GetItemAsync<string>("PoolInfoUrl");
+            CurrentApiKey = await LocalStorage.GetItemAsync<string>(AppConfiguration.ApiKeyLabel);
             await base.OnInitializedAsync();
         }
 
@@ -37,8 +37,12 @@ namespace CryptoDashboardBlazor.Client.Components
             // save
             await BlazoredModal.CloseAsync();
 
-            await LocalStorage.SetItemAsync("PoolInfoUrl", CurrentPoolInfoUrl);
-            Facade.SaveSettings(CurrentPoolInfoUrl);
+            await LocalStorage.SetItemAsync(AppConfiguration.ApiKeyLabel, CurrentApiKey);
+            if (EditItem != null)
+            {
+                await LocalStorage.SetItemAsync(AppConfiguration.WalletLabel, EditItem);
+            }
+            Facade.SaveSettings(CurrentApiKey, EditItem);
         }
     }
 }

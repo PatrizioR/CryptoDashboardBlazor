@@ -1,18 +1,28 @@
 ﻿@inject Blazored.LocalStorage.ILocalStorageService localStorage
-
-<EditForm Model="@CurrentPoolInfoUrl" style="width: 95%">
-    <Row>
-        <Column>
-            <Card Margin="Margin.Is5.OnY">
-                <CardHeader>
-                    <CardTitle>Settings</CardTitle>
-                </CardHeader>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Local> Loc
+<Row>
+    <Column>
+        <Card Margin="Margin.Is2.OnY">
+            <CardHeader>
+                <CardTitle>@Loc["Settings"]</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <Label>@Loc["Api Key"]</Label>
+                <TextEdit @bind-Text="@CurrentApiKey" Placeholder="@Loc["Api Key"]"></TextEdit>
+            </CardBody>
+            @if (EditItem != null)
+            {
                 <CardBody>
-                    <TextEdit @bind-Text="@CurrentPoolInfoUrl" Placeholder="Api URL"></TextEdit>
+                    <Label>@Loc["Wallet Id"]</Label>
+                    <TextEdit @bind-Text="@EditItem.Id" Placeholder="@Loc["Wallet Id"]"></TextEdit>
+                    <Label>@Loc["Name"]</Label>
+                    <TextEdit @bind-Text="@EditItem.Name" Placeholder="@Loc["Name"]"></TextEdit>
+                    <Label>@Loc["Owner"]</Label>
+                    <TextEdit @bind-Text="@EditItem.Owner" Placeholder="@Loc["Owner"]"></TextEdit>
                 </CardBody>
-            </Card>
-        </Column>
-    </Row>
-</EditForm>
-
-<button class="btn btn-primary" @onclick="SaveAsync">Speichern</button>
+            }
+        </Card>
+    </Column>
+</Row>
+<button class="btn btn-primary" @onclick="SaveAsync">@Loc["Save"]</button>
+<button class="btn btn-secondary" @onclick="(() => BlazoredModal.CloseAsync())">@Loc["Cancel"]</button>

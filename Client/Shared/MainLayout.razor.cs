@@ -22,7 +22,7 @@ namespace CryptoDashboardBlazor.Client.Shared
 
         protected override void OnAfterRender(bool firstRender)
         {
-            if (firstRender && ComponentsState.Value.CurrentApiUrl == null)
+            if (firstRender && ComponentsState.Value.CurrentApiKey == null)
             {
                 ComponentsState.StateChanged += ComponentsState_StateChanged;
             }
@@ -30,11 +30,6 @@ namespace CryptoDashboardBlazor.Client.Shared
 
         private void ComponentsState_StateChanged(object? sender, WalletState e)
         {
-            if (!e.IsLoading && e.CurrentApiUrl != null)
-            {
-                Modal.Show<SettingsDialog>($"Settings", new Blazored.Modal.ModalOptions() { ContentScrollable = true });
-            }
-
             if (!e.IsLoading && e.HasCurrentErrors)
             {
                 ToastService.ShowError(e.CurrentErrorMessage, "Fehler");

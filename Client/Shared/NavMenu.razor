@@ -6,25 +6,19 @@
 <div id="navs-wrapper">
     <nav class="navbar navbar-expand-md navbar-light bg-dark" id="header-nav">
         <div class="container-fluid" id="header-wrapper">
-            <div class="align-top py-sm-1" id="logo-wrapper">
-                <a href="#" class="navbar-brand h-100">
-                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_banner.png" alt="@Loc["The silver mine"]"
-                         style="max-height: 100px; height: 10vw" />
-                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_second_banner.png" alt="@Loc["The silver mine"]"
-                         style="max-height: 100px; height: 10vw" />
-                    <img class="mx-auto" id="brand-logo" src="./media/img/the_silver_mine_third_banner.png" alt="@Loc["The silver mine"]"
-                         style="max-height: 100px; height: 10vw" />
-                </a>
-            </div>
             <div class="d-flex flex-row-reverse flex-wrap" id="full-nav-options">
                 <div class="p-2">
                     <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <NavLink class="nav-link ml-md-4 ml-sm-4 ml-xs-1" href="" Match="NavLinkMatch.All">
-                                <span class="d-none d-md-inline btn btn-secondary btn-lg"> @Loc["Dashboard"]<span class="fas fa-project-diagram ml-md-3 ml-1" aria-hidden="true"></span></span>
-                            </NavLink>
+                        <li class="nav-item mr-2">
+                            <Button Class="nav-link" Color="Color.Success" Clicked="(async () => {await LoadPoolInfoAsync(); await LoadWalletsAsync();})"><i title="@Loc["Refresh"]" class="fa fa-sync"></i></Button>
                         </li>
-                        <li class="nav-item ml-md-3 ml-1" style=" margin-top: 0.78rem " title="@Loc["Language"]">
+                        @if (!WalletState.Value.IsLoading && WalletState.Value.CurrentWallets?.Any() != true)
+                        {
+                            <li class="nav-item mr-2">
+                                <Button Class="nav-link" Color="Color.Primary" Clicked="AddWalletAndShowSettingsAsync"><i class="fa fa-plus"></i></Button>
+                            </li>
+                        }
+                        <li class="nav-item mr-2" title="@Loc["Language"]">
                             <div class="input-group d-flex justify-content-center align-items-center">
                                 <div class="input-group-prepend language-prepend">
                                     <label class="input-group-text" for="language-selection">
@@ -35,9 +29,12 @@
                                         id="language-selection">
                                     @foreach (var culture in supportedCultures)
                                     {
-                        <option value="@culture">@culture.TwoLetterISOLanguageName.ToUpper()</option>}
+                                        <option value="@culture">@culture.TwoLetterISOLanguageName.ToUpper()</option>}
                                 </select>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <Button Class="nav-link" Color="Color.Warning" Clicked="ShowSettingsAsync"><i class="fa fa-cog"></i></Button>
                         </li>
                     </ul>
                 </div>
