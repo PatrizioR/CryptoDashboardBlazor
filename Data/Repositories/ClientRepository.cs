@@ -22,10 +22,10 @@ namespace CryptoDashboardBlazor.Data.Repositories
             throw new NotSupportedException($"Illegal type {typeof(T).Name}");
         }
 
-        public async Task<PoolInfoDto> GetPoolInfoByNameAsync(string name, string url, HttpClient client)
+        public async Task<PoolInfoDto> GetPoolInfoByNameAsync(string? name, string? url, HttpClient client)
         {
             PoolInfoDto? poolInfo;
-            switch (name.ToLower())
+            switch (name?.ToLower())
             {
                 case "2miners":
                     var value = await client.GetFromJsonAsync<CryptocompareRequestDto>(url);

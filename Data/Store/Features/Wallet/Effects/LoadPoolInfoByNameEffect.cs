@@ -17,7 +17,7 @@ namespace CryptoDashboardBlazor.Data.Store.Features.Wallet.Effects
         protected override async Task HandleEffectAsync(LoadPoolInfoByNameAction action, IDispatcher dispatcher)
         {
             logger.LogInformation($"Start...");
-            var poolInfo = await clientRepository.GetPoolInfoByNameAsync(action.Name, action.Url, httpClient);
+            var poolInfo = await clientRepository.GetPoolInfoByNameAsync(action?.Name, action?.Url, httpClient);
             logger.LogInformation("successfully!");
             dispatcher.Dispatch(new LoadPoolInfoByNameSuccessAction(poolInfo));
         }

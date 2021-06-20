@@ -15,7 +15,7 @@
                 @Wallet?.Workers?.Count()
             </FieldBody>
             <FieldBody Class="big-text" ColumnSize="ColumnSize.Is3">
-                @(PoolInfo?.NextPayment(Wallet.UnpaidBalance + Wallet.UnconfirmedBalance, Wallet.Last24HoursReward)?.ToShortDayOfMonthGerman()) @(PoolInfo?.NextPayment(Wallet.UnpaidBalance + Wallet.UnconfirmedBalance, Wallet.Last24HoursReward).ToGermanString())
+                @(PoolInfo?.NextPayment(Wallet?.UnpaidBalance + Wallet?.UnconfirmedBalance, Wallet?.Last24HoursReward)?.ToShortDayOfMonthGerman()) @(PoolInfo?.NextPayment(Wallet?.UnpaidBalance + Wallet?.UnconfirmedBalance, Wallet?.Last24HoursReward).ToGermanString())
             </FieldBody>
         </Field>
         <Field Horizontal="true">

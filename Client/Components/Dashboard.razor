@@ -6,8 +6,8 @@
         <CircleLoading></CircleLoading>
     }
     <Column ColumnSize="ColumnSize.Is12">
-        <AdvancedTimer IntervalInMilisec="60000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(c => { LoadWalletsAsync(); })" />
-        <AdvancedTimer IntervalInMilisec="3600000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(c => { LoadPoolInfoAsync(); })" />
+        <AdvancedTimer IntervalInMilisec="60000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(async (c) => { await LoadWalletsAsync(); })" />
+        <AdvancedTimer IntervalInMilisec="3600000" DelayInMilisec="60000" Occurring="@Times.Infinite()" OnIntervalElapsed="@(async(c) => { await LoadPoolInfoAsync(); })" />
         <PoolInfoComponent PoolInfo="@WalletState.Value.CurrentPoolInfo" Wallets="@WalletState.Value.CurrentWallets" LastUpdate="@WalletState.Value.LastUpdate"></PoolInfoComponent>
         @foreach (var wallet in WalletState.Value.CurrentWallets.DefaultIfNullOrEmpty())
         {

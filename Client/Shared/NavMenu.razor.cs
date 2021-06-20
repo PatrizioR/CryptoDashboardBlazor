@@ -39,6 +39,7 @@ namespace CryptoDashboardBlazor.Client.Shared
 
         public async Task ShowSettingsAsync()
         {
+            await Task.CompletedTask;
             Modal.Show<SettingsDialog>($"Settings", new Blazored.Modal.ModalOptions() { HideHeader = true });
         }
 

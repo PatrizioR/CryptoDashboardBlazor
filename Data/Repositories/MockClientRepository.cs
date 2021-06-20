@@ -25,7 +25,7 @@ namespace CryptoDashboardBlazor.Data.Repositories
             throw new NotSupportedException($"Illegal type {typeof(T).Name}");
         }
 
-        public async Task<PoolInfoDto> GetPoolInfoByNameAsync(string name, string url, HttpClient client)
+        public async Task<PoolInfoDto> GetPoolInfoByNameAsync(string? name, string? url, HttpClient client)
         {
             await Task.CompletedTask;
             var poolInfo = poolInfos.FirstOrDefault(pi => pi.Name == name);

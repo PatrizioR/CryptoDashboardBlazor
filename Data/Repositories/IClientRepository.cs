@@ -13,6 +13,6 @@ namespace CryptoDashboardBlazor.Data.Repositories
 
         public Task<IEnumerable<WalletDto>> GetWalletsAsync(HttpClient client, params WalletDto[]? ids);
 
-        public Task<PoolInfoDto> GetPoolInfoByNameAsync(string name, string url, HttpClient client);
+        public Task<PoolInfoDto> GetPoolInfoByNameAsync(string? name, string? url, HttpClient client);
     }
 }
